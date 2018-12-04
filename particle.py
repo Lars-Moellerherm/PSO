@@ -12,7 +12,7 @@ class particle_single():
     obj_value -> objective values
     '''
     
-    def __init__(self,obj_func,attribute_number,constr=[],vmax=np.array(np.nan),l_bound=np.array(np.nan),u_bound=np.array(np.nan),position=np.array(np.nan),velocity=np.array(np.nan)):
+    def __init__(self,obj_func,attribute_number,constr=[],vmax=np.array(np.nan),l_bound=np.array(np.nan),u_bound=np.array(np.nan),integer=np.array(np.nan),position=np.array(np.nan),velocity=np.array(np.nan)):
         self.obj_function = obj_func
         self.constraints = constr
         self.att = attribute_number
@@ -21,9 +21,18 @@ class particle_single():
         else:
             try:
                 if attribute_number!=1:
-                    self.position = np.array([random.uniform(l_bound[i],u_bound[i]) for i in range(self.att)])
+                    init_pos = []
+                    for i in range(self.att):
+                        if integer[i]==False:
+                            init_pos.append(random.uniform(l_bound[i],u_bound[i]))
+                        else:
+                            init_pos.append(random.randint(l_bound[i],u_bound[i]))
+                    self.position = np.array(init_pos)
                 else:
-                    self.position= random.uniform(l_bound,u_bound)
+                    if integer==False:
+                        self.position= random.uniform(l_bound,u_bound)
+                    else:
+                        self.position= random.randint(l_bound,u_bound)
             except:
                 print('We need lower and upper bound for init position')
         
@@ -89,7 +98,7 @@ class particle_multi(particle_single):
     rank -> domination rank
     '''
     
-    def __init__(self,obj_func,attribute_number,constr=[],vmax=np.array(np.nan),l_bound=np.array(np.nan),u_bound=np.array(np.nan),position=np.array(np.nan),velocity=np.array(np.nan)):
+    def __init__(self,obj_func,attribute_number,constr=[],vmax=np.array(np.nan),l_bound=np.array(np.nan),u_bound=np.array(np.nan),integer=np.array(np.nan),position=np.array(np.nan),velocity=np.array(np.nan)):
         self.obj_functions = obj_func
         self.constraints=constr
         self.att = attribute_number
@@ -98,9 +107,18 @@ class particle_multi(particle_single):
         else:
             try:
                 if attribute_number!=1:
-                    self.position = np.array([random.uniform(l_bound[i],u_bound[i]) for i in range(self.att)])
+                    init_pos = []
+                    for i in range(self.att):
+                        if integer[i]==False:
+                            init_pos.append(random.uniform(l_bound[i],u_bound[i]))
+                        else:
+                            init_pos.append(random.randint(l_bound[i],u_bound[i]))
+                    self.position = np.array(init_pos)
                 else:
-                    self.position = random.uniform(l_bound,u_bound)
+                    if integer==False:
+                        self.position= random.uniform(l_bound,u_bound)
+                    else:
+                        self.position= random.randint(l_bound,u_bound)
             except:
                 print('We need lower and upper bound for init position')
         

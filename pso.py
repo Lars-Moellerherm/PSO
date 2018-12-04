@@ -13,30 +13,34 @@ class pso:
     comp_swarm -> swarm + g_best + p_best
     l_bound -> lower bounds
     u_bound -> upper bounds
+    integer -> Integer constraint for every attribute
     vmax -> max velocity
     g_best -> best particle of the swarm
     multi -> multi objective or single objective
     '''
     
-    def __init__(self,att,l_b,u_b,obj_func,constraints=[],c=2.1304,s=1.0575,w=0.4091,pop=156,vm=np.nan):
+    def __init__(self,att,l_b,u_b,obj_func,constraints=[],c=2.1304,s=1.0575,w=0.4091,pop=156,vm=np.nan,integer=False):
         if np.isnan(vm):
-            vm = [u_b[i]-l_b[i] for i in range(att)]
+            vm = np.array([u_b[i]-l_b[i] for i in range(att)])
         if type(vm) != np.ndarray and type(vm) != list:
-            vm = [vm for i in range(att)]
+            vm = np.array([vm for i in range(att)])
         if len(vm)!=att:
             np.append(vm, [vm[len(vm)-1]for i in range(len(l_b),att)])
+        if type(integer) != list:
+            integer = np.array([integer for i in range(att)])
         self.c_param = c
         self.s_param = s
         self.v_weight = w
         self.l_bound = l_b
         self.u_bound = u_b
+        self.integer = integer
         self.vmax = vm
         if type(obj_func)!=list:
             self.multi = False
-            self.swarm = [particle_single(obj_func,att,constraints,vm,l_b,u_b) for i in range(pop)]
+            self.swarm = [particle_single(obj_func,att,constraints,vm,l_b,u_b,integer) for i in range(pop)]
         else:
             self.multi = True
-            self.swarm = [particle_multi(obj_func,att,constraints,vm,l_b,u_b) for i in range(pop)]
+            self.swarm = [particle_multi(obj_func,att,constraints,vm,l_b,u_b,integer) for i in range(pop)]
             self.comp_swarm = self.swarm
         if self.multi:
             self.non_dom_sort()
@@ -135,6 +139,9 @@ class pso:
                 
                 #calc new position
                 new_p = part.position + new_v
+                for i in range(len(new_p)):
+                    if self.integer[i]:
+                        new_p[i] = int(new_p[i])
                 
                 # stick to bound
                 new_p = np.array([new_p[i] if new_p[i]>self.l_bound[i] else self.l_bound[i] for i in range(len(new_p))])
