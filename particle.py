@@ -14,6 +14,8 @@ class particle_single():
     
     def __init__(self,obj_func,attribute_number,constr=[],vmax=np.array(np.nan),l_bound=np.array(np.nan),u_bound=np.array(np.nan),integer=np.array(np.nan),position=np.array(np.nan),velocity=np.array(np.nan)):
         self.obj_function = obj_func
+        if type(constr)!=list:
+            constr = [constr]
         self.constraints = constr
         self.att = attribute_number
         if np.all(np.isnan(position))==False:
