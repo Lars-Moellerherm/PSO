@@ -2,6 +2,7 @@ from particle import *
 import matplotlib.pyplot as plt
 import random
 import numpy as np
+import copy
 
 
 class pso:
@@ -104,7 +105,7 @@ class pso:
         self.g_best = self.swarm[0]
         for part in self.swarm[1:]:
             if part.compare(self.g_best):
-                self.g_best = part
+                self.g_best = copy.deepcopy(part)
         
     def plot(self):
         for partic in self.swarm:
@@ -158,20 +159,20 @@ class pso:
             if self.multi:
                 self.non_dom_sort()
                 # set g_best with new rank and distance
-                self.g_best = self.comp_swarm[0]
+                self.g_best = copy.deepcopy(self.comp_swarm[0])
                 j=1
-                new_swarm=self.comp_swarm[1:-1:2]
-                self.swarm=new_swarm
+                new_swarm = self.comp_swarm[1:-1:2]
+                self.swarm = copy.deepcopy(new_swarm)
                 j+=1
                 
             for part in self.swarm:
                 if self.multi:
                     #set swarm and p_best with new rank and distance 
-                    part.best_p = self.comp_swarm[j]
+                    part.best_p = copy.deepcopy(self.comp_swarm[j])
                     j+=2
                 #compare part with g_best
                 if part.compare(self.g_best):
-                    self.g_best = part
+                    self.g_best = copy.deepcopy(part)
                 #update p_best
                 part.compare_p_best()
                 
