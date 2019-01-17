@@ -5,10 +5,12 @@ import numpy as np
 
 class particle_single():
     '''
+    att -> number of Attributes
     position -> Particle attribute values
     velocity -> particle velocity it has been moved with
     best_p -> best particle in the past gets just set by first_set_best
     obj_function -> objective functions
+    constraints -> constraints
     obj_value -> objective values
     '''
     
@@ -65,7 +67,7 @@ class particle_single():
         return self.obj_value
     
     def init_p_best(self):
-        self.best_p = particle_single(self.obj_function,self.att,position=self.position,velocity=self.velocity)
+        self.best_p = particle_single(self.obj_function,self.att,constr=self.constraints,position=self.position,velocity=self.velocity)
         
     def compare_p_best(self):
         if self.obj_value<self.best_p.obj_value:
@@ -89,10 +91,12 @@ class particle_single():
     
 class particle_multi(particle_single):
     '''
+    att -> number of attributes
     position -> Particle attribute values
     velocity -> particle velocity it has been moved with
     best_p -> best particle in the past gets just set by first_set_best
     obj_functions -> objective functions
+    constraints -> canstraint functions
     obj_values -> objective values
     S -> particles this particle dominates
     n -> number of particles this particle is dominated by
@@ -153,7 +157,7 @@ class particle_multi(particle_single):
         return self.obj_values
     
     def init_p_best(self):
-        self.best_p = particle_multi(self.obj_functions,self.att,position=self.position,velocity=self.velocity)
+        self.best_p = particle_multi(self.obj_functions,self.att,constr=self.constraints,position=self.position,velocity=self.velocity)
         self.best_p.rank  = self.rank
         self.best_p.distance = self.distance
         
