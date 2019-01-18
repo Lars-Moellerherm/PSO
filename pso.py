@@ -107,17 +107,22 @@ class pso:
             if part.compare(self.g_best):
                 self.g_best = copy.deepcopy(part)
         
-    def plot(self):
+    def plot(self, best_p=True, x_coord=0, y_coord=1):
+        '''
+        best_p = True or False -> want to plot the personal best or the actual position of all particles
+        x_coord = 0,1,... -> for single: which position variable should be plotted ; for multi: which objective value should be plotted on the y axis
+        y_coord = 0,1,... -> for single: not relevant ; for multi: which objective value should be plottet on the y axis
+        '''
         for partic in self.swarm:
-            partic.plot()
+            partic.plot(best_p,x_coord,y_coord)
         if self.multi:
-            plt.xlabel(r'$f_1(x_1,x_2,\dots)$')
-            plt.ylabel(r'$f_2(x_1,x_2,\dots)$')
+            plt.xlabel(r'$f_%2i(x_1,x_2,\dots)$' % x_coord)
+            plt.ylabel(r'$f_%2i(x_1,x_2,\dots)$' % y_coord)
             plt.title('Pareto Front')
         else:
-            plt.xlabel(r'$x_1$')
+            plt.xlabel(r'$x_%2i$' % x_coord)
             plt.ylabel(r'$f(x_1,x_2,\dots)$')
-            plt.title('objective value against the first attribute')
+            plt.title('objective value against one attribute')
         plt.show()
      
         
