@@ -4,6 +4,14 @@ single- and multi-objective **Particle Swarm Optimizer**
 This module can optimize single and multi objective problems.
 It uses **non domination sorting** for multi objective problems.
 
+## Particle Swarm Optimization Algorithm
+
+The Particle Swarm Optimizer is an Algorithm which iteratively searches for the optimal solution in a search space, according to a fitness evaluation. The swarm consists of a number of particles, which are solutions in the search space. These particles move in each step, depending on the velocity. The velocity depends on the actual distance of the particle to the best position in history of the particle and to the globally best known position.	
+
+> ![equation](http://www.sciweavers.org/tex2img.php?eq=v_%7Bt%2B1%7D%20%3D%20%CF%89%20v_t%20%2B%20c%20r_1%20%28%20p_t%20-%20x_t%20%29%20%2B%20s%20r_2%20%28%20g_t%20-%20x_t%20%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+
+Because PSO is an metaheuristic there is no garantee that the swarm moves to the global optimum and doesn't get stuck in a local Extremum
+
 ## How to use pso class:
 
 ### Initiate :
@@ -35,7 +43,7 @@ It uses **non domination sorting** for multi objective problems.
 - **_moving(steps, time_termination = -1)_** : 	
   - doing *steps* iterations
   - if *timer_termination != -1* terminates before *steps* or done if *time > time_termination*
-                
+                	
 - **_plot(best_p=True, x_coord = 0, y_coord = 1)_** : plotting the actual swarm
   - *best_p = True* or *False* -> want to plot the personal best or the actual position of all particles
   - *x_coord = 0,1,...* -> for single: which position variable should be plotted ; for multi: which objective value should be plotted on the y-axis
