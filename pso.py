@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import random
 import numpy as np
 import copy
+import time
 
 
 class pso:
@@ -126,8 +127,11 @@ class pso:
         plt.show()
      
         
-    def moving(self,steps):
+    def moving(self,steps, time_termination):
+        t0 = time.time()
         for i in range(steps):
+            if time_termination != -1 and time.time()-t0 > time_termination:
+                break
             if self.multi:
                 # comp_swarm needed to update rank and distance of p_best und g_best
                 # first is global best ; the part and p_best alternating
