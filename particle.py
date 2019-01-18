@@ -76,8 +76,11 @@ class particle_single():
     def compare(self,part2):
         return self.obj_value<part2.obj_value
         
-    def plot(self):
-        plt.plot(self.position[0],self.obj_value,'k.')
+    def plot(self, best_p, x_coord, y_coord):
+        if best_p:
+            plt.plot(self.best_p.position[x_coord],self.best_p.obj_value,'k.')
+        else:
+            plt.plot(self.position[x_coord],self.obj_value,'k.')
         
     def calc_obj_value(self):
         if not self.constraints:
@@ -171,13 +174,17 @@ class particle_multi(particle_single):
         return self.compare_rank_dist(self.rank,self.distance,part2.rank,part2.distance)
 
         
-    def plot(self):
-        if self.rank == 0:
-            plt.plot(self.obj_values[0],self.obj_values[1],'r*')
+    def plot(self,best_p,x_coord,y_coord):
+        if best_p:
+            if self.best_p.rank==0:
+                plt.plot(self.best_p.obj_values[x_coord],self.best_p.obj_values[y_coord],'r*')
+            else:
+                plt.plot(self.best_p.obj_values[x_coord],self.best_p.obj_values[y_coord],'k.')
         else:
-            plt.plot(self.obj_values[0],self.obj_values[1],'k.')
-        if self.best_p.rank==0:
-            plt.plot(self.best_p.obj_values[0],self.best_p.obj_values[1],'r*')
+            if self.rank == 0:
+                plt.plot(self.obj_values[x_coord],self.obj_values[y_coord],'r*')
+            else:
+                plt.plot(self.obj_values[x_coord],self.obj_values[y_coord],'k.')
 
         
     def compare_rank_dist(self,rank_1,distance_1,rank_2,distance_2):
