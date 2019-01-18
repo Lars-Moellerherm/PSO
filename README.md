@@ -32,12 +32,17 @@ How to use pso class:
 	Functions:
         
 		moving(steps, time_termination=-1): 	- doing steps iterations
-							- if timer_termination != -1 terminates before steps or done if 								  time > time_termination
+							- if timer_termination != -1 terminates before steps or done if 
+							  time > time_termination
                 
 		plot(best_p=True, x_coord=0, y_coord=1): plotting the actual swarm
-							- best_p = True or False -> want to plot the personal best or the actual 							   position of all particles
-        						- x_coord = 0,1,... -> for single: which position variable should be 								  plotted ; for multi: which objective value should be plotted on the y 							  axis
-        						- y_coord = 0,1,... -> for single: not relevant ; for multi: which 								  objective value should be plottet on the y axis
+							- best_p = True or False -> want to plot the personal best or the actual
+							  position of all particles
+        						- x_coord = 0,1,... -> for single: which position variable should be 
+							  plotted ; for multi: which objective value should be plotted on the y
+							  axis
+        						- y_coord = 0,1,... -> for single: not relevant ; for multi: which 
+							  objective value should be plottet on the y axis
                 
 		get_solution(whole_particle=True): whole_particle=      -True returns the solution as type(particle class);
                 
