@@ -154,8 +154,8 @@ class pso:
                         new_p[i] = int(new_p[i])
                 
                 # stick to bound
-                new_p = np.array([new_p[i] if new_p[i]>self.l_bound[i] else self.l_bound[i] for i in range(len(new_p))])
-                new_p = np.array([new_p[i] if new_p[i]<self.u_bound[i] else self.u_bound[i] for i in range(len(new_p))])               
+                new_p = np.array([new_p[i] if new_p[i]>self.l_bound[i] else self.u_bound[i] - abs(self.l_bound[i]-new_p[i])%(self.u_bound[i]-self.l_bound[i]) for i in range(len(new_p))])
+                new_p = np.array([new_p[i] if new_p[i]<self.u_bound[i] else self.l_bound[i] + abs(self.u_bound[i]-new_p[i])%(self.u_bound[i]-self.l_bound[i]) for i in range(len(new_p))])               
                 
                 part.set_velocity(new_v)
                 part.set_position(new_p)
